@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../classes/CSI2120/GITHUB"
+		},
+		{
+			"path": "../../../../../classes/CSI2120/Labs"
+		}
+	],
+	"settings": {
+		"java.debug.settings.onBuildFailureProceed": true
+	}
+}
