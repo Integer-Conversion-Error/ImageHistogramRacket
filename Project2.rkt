@@ -50,7 +50,7 @@
 
 (define (read-all-files file-path n)
   (if (file-exists? file-path)
-      (cons (read-file-as-list file-path) (read-file-as-list (string-append "QueryImages/q" (number->string (+ n 1)) ".ppm")))
+      (cons (read-file-as-list file-path) (read-file-as-list (string-append "QueryImages/q" (number->string (+ n 1)) ".ppm")) )
       '()))
 
 (define lines (read-all-files file-path 10))
