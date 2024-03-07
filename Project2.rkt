@@ -14,12 +14,12 @@
       (read-lines port '()))))
 
 ;; Example usage:
-(define file-path "QueryImages/q00.ppm") 
-(define lines (read-file-as-list file-path))
-(define dimensions (list-ref lines 2))
+(define file-path "QueryImages/q10.ppm") 
+;; (define lines (read-file-as-list file-path))
+;; (define dimensions (list-ref lines 2))
 
-(define x-len (string->number(substring dimensions 0 3)))
-(define y-len (string->number(substring dimensions 4 7)))
+;; (define x-len (string->number(substring dimensions 0 3)))
+;; (define y-len (string->number(substring dimensions 4 7)))
 
 
 (define (arithmetic-shift-right Y X)
@@ -32,18 +32,44 @@
 ;; (define result (arithmetic-shift-right Y X))
 ;; (displayln result) ; Display the result
 
-(define (read-first-line-from-files n)
-  (define (read-first-line file-path)
-    (call-with-input-file file-path
-      (lambda (port)
-        (read-line port))))
-  
-  (let ((file-path (format (string-append "QueryImages/q" (number->string 55) ".ppm"))))
+;; (define (read-first-line-from-files n)
+;;   (define (read-first-line file-path)
+;;     (call-with-input-file file-path
+;;       (lambda (port)
+;;         (read-line port))))
+;;   
+;;   (let ((file-path (format (string-append "QueryImages/q" (number->string n) ".ppm"))))
+;; 
+;;     (if (file-exists? file-path)
+;;         (cons (read-first-line file-path) (read-first-line-from-files (+ n 1)))
+;;         (display file-path))))
 
-    (if (file-exists? file-path)
-        (cons (read-first-line file-path) (read-first-line-from-files (+ n 1)))
-        (display file-path))))
+
 
 ; Example usage:
-(define first-lines (read-first-line-from-files 1))
-(displayln first-lines)
+
+(define (read-all-files file-path n)
+  (if (file-exists? file-path)
+      (cons (read-file-as-list file-path) (read-file-as-list (string-append "QueryImages/q" (number->string (+ n 1)) ".ppm")))
+      '()))
+
+(define lines (read-all-files file-path 10))
+(displayln (list-ref lines 5))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
