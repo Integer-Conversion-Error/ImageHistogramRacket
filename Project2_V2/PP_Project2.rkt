@@ -90,18 +90,39 @@
 
 ; Comparator Functions
 
-(define (shortenList lst k) ;Finish later
-  -1
-)
+;;; (define (shortenList lst k) ;Shorten given list 'lst' to length K, and return new list
+;;;   -1
+;;; )
+
+;;; (define (removeItemsFromIndex lst n)
+;;;   (if (= (length lst) n)
+;;;     '()
+
+
+
+;;;   )
+;;; )
+
+(define (shortenList lst k)
+  (if (<= k 0)
+      '() ; Return an empty list if k is zero or negative
+      (take lst k)))
+
+(define (take lst k)
+  (if (or (null? lst) (= k 0))
+      '() ; Return an empty list if the input list is empty or k is zero
+      (cons (car lst) (take (cdr lst) (- k 1)))))
+
 
 (define (addToPQ hist imageRel k) ;Finish later
   -1
   )
 
+(define lst1 '(1 2 4 6 7 8 9 19))
+(display (shortenList lst1 5))
+;;; (define h1 (colorHistogram2 "25.jpg.txt"))
+;;; (define h2 (colorHistogram2 "26.jpg.txt"))
+;;; (define h3 (normalizeH h1 (getNumPixels h1)))
+;;; (define h4 (normalizeH h2 (getNumPixels h2)))
 
-(define h1 (colorHistogram2 "25.jpg.txt"))
-(define h2 (colorHistogram2 "26.jpg.txt"))
-(define h3 (normalizeH h1 (getNumPixels h1)))
-(define h4 (normalizeH h2 (getNumPixels h2)))
-
-(relation h3 h4)
+;;; (relation h3 h4)
