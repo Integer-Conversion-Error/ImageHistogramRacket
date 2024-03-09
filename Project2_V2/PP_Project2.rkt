@@ -1,23 +1,23 @@
 ;ColorHistogram
-
+#lang racket
 ; File reader functions
 
 ; Reads file f and puts numbers into a list
 (define (readhelper f)
   (let ((num (read f)))
-      (if (number? num)
-         (cons num (readhelper f))
-         '()
-      )
+    (if (number? num)
+        (cons num (readhelper f))
+        '()
+        )
+    )
   )
-)
 
 ; Opens file and sends the input file to readhelper for processing
 (define (readfile filename)
   (let ((file (open-input-file filename)))
     (begin
       (read file)
-      (readHelper file)
+      (readhelper file)
       )
     )
   )
@@ -34,8 +34,8 @@
   (if (null? hist)
       0
       (+ (car hist) (getNumPixels (cdr hist)))
+      )
   )
-)
 
 ; Function used to normalize a histogram based on its total number of pixels
 (define (normalizeH hist totalPixels)
@@ -86,22 +86,10 @@
       (twoDP answer)
       ) 
     )
-)
+  )
 
 ; Comparator Functions
 
-;;; (define (shortenList lst k) ;Shorten given list 'lst' to length K, and return new list
-;;;   -1
-;;; )
-
-;;; (define (removeItemsFromIndex lst n)
-;;;   (if (= (length lst) n)
-;;;     '()
-
-
-
-;;;   )
-;;; )
 
 (define (shortenList lst k)
   (if (<= k 0)
@@ -114,12 +102,35 @@
       (cons (car lst) (take (cdr lst) (- k 1)))))
 
 
-(define (addToPQ hist imageRel k) ;Finish later
-  -1
-  )
 
-(define lst1 '(1 2 4 6 7 8 9 19))
-(display (shortenList lst1 5))
+(define (addToPQ hist imageRel);Add element imageRel to list hist. Hist is a priority queue as a list, so the largest value is kept at the 0 index. Maintain the size of the priority queue
+  (define (insert-at index element lst)
+    (if (= index 0)
+        (cons element lst)
+        (cons (car lst) (insert-at (- index 1) element (cdr lst)))))
+
+  (define (add-to-pq-helper pq element)
+    (if (null? pq)
+        (list element)
+        (if (<= (car pq) element)  ; Corrected the comparison here
+            (cons element pq)
+            (cons (car pq) (add-to-pq-helper (cdr pq) element)))))
+
+  (let* ((original-size (length hist))
+         (updated-pq (add-to-pq-helper hist imageRel)))
+    (if (> (length updated-pq) original-size)
+        (let loop ((i 0) (result '()) (remaining updated-pq))
+          (if (= i original-size)
+              (reverse result)
+              (loop (+ i 1) (cons (car remaining) result) (cdr remaining))))
+        updated-pq)))
+
+
+
+
+(define lst1 '(19 9 7 6 5 3 1))
+
+(display (addToPQ lst1 52))
 ;;; (define h1 (colorHistogram2 "25.jpg.txt"))
 ;;; (define h2 (colorHistogram2 "26.jpg.txt"))
 ;;; (define h3 (normalizeH h1 (getNumPixels h1)))
