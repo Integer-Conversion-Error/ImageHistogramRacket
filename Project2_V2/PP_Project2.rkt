@@ -101,25 +101,6 @@
       '() ; Return an empty list if the input list is empty or k is zero
       (cons (car lst) (take (cdr lst) (- k 1)))))
 
-
-
-;; (define (addToPQ hist imageRel k);Add element imageRel to list hist. Hist is a priority queue as a list, so the largest value is kept at the 0 index. Maintain the size of the priority queue
-;;   (define (add-to-pq-helper pq element)
-;;     (if (null? pq)
-;;         (list element)
-;;         (if (<= (car pq) element)  ; Corrected the comparison here
-;;             (cons element pq)
-;;             (cons (car pq) (add-to-pq-helper (cdr pq) element)))))
-;; 
-;;   (let* ((max-size k)
-;;          (updated-pq (add-to-pq-helper hist imageRel)))
-;;     (if (> (length updated-pq) max-size)
-;;         (let loop ((i 0) (result '()) (remaining updated-pq))
-;;           (if (or (= i max-size) (null? remaining))
-;;               (reverse result)
-;;               (loop (+ i 1) (cons (car remaining) result) (cdr remaining))))
-;;         updated-pq)))
-
 (define (addToPQ hist imageRel k)
   (define (insert-at index element lst)
     (if (= index 0)
@@ -144,25 +125,50 @@
         (truncate-pq updated-pq max-size)
         updated-pq)))
 
+(define (file-exists-in-directory? directory file-name)
+  (file-exists? (build-path directory file-name)))
 
-(define lst1 '(82 40 32))
-(define lst2 '(19 9 7 4 3))
-(define lst3 '(19 9 7 6 5 3 1))
+(define (main-fn qFile checkedFile returnLst)
+  (if (not (file-exists? (build-path checkedFile)))
+      '()
+      (addToPQ returnLst
+               (relation
+                (normalizeH
+                 (colorHistogram2 qFile) (getNumPixels (colorHistogram2 qFile)
+                                                       )
+                 )
+                (normalizeH
+                 (colorHistogram2 checkedFile) (getNumPixels (colorHistogram2 checkedFile))
+                 )
+                )
+               5)
+      )
+  )
+      
+    
 
 
 
-(display (addToPQ lst1 11 5))
-(newline)
-(display (addToPQ lst2 25 5))
-(newline)
-(display (addToPQ lst3 52 (length lst3)))
+
+  
+;; (define lst1 '(82 40 32))
+;; (define lst2 '(19 9 7 4 3))
+;; (define lst3 '(19 9 7 6 5 3 1))
 
 
 
-;(add-to-pq-helper2 lst1 5)
-;;; (define h1 (colorHistogram2 "25.jpg.txt"))
-;;; (define h2 (colorHistogram2 "26.jpg.txt"))
-;;; (define h3 (normalizeH h1 (getNumPixels h1)))
-;;; (define h4 (normalizeH h2 (getNumPixels h2)))
+;; (display (addToPQ lst1 11 5))
+;; (newline)
+;; (display (addToPQ lst2 25 5))
+;; (newline)
+;; (display (addToPQ lst3 52 (length lst3)))
 
-;;; (relation h3 h4)
+
+
+;; (addToPQ lst1 5)
+(define h1 (colorHistogram2 "imageDataset2_15_20/25.jpg.txt"))
+(define h2 (colorHistogram2 "queryImages/q00.jpg.txt"))
+(define h3 (normalizeH h1 (getNumPixels h1)))
+(define h4 (normalizeH h2 (getNumPixels h2)))
+
+(main-fn "imageDataset2_15_20/25.jpg.txt" "queryImages/q00.jpg.txt" '())
