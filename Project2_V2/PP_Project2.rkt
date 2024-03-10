@@ -103,22 +103,47 @@
 
 
 
-(define (addToPQ hist imageRel k);Add element imageRel to list hist. Hist is a priority queue as a list, so the largest value is kept at the 0 index. Maintain the size of the priority queue
+;; (define (addToPQ hist imageRel k);Add element imageRel to list hist. Hist is a priority queue as a list, so the largest value is kept at the 0 index. Maintain the size of the priority queue
+;;   (define (add-to-pq-helper pq element)
+;;     (if (null? pq)
+;;         (list element)
+;;         (if (<= (car pq) element)  ; Corrected the comparison here
+;;             (cons element pq)
+;;             (cons (car pq) (add-to-pq-helper (cdr pq) element)))))
+;; 
+;;   (let* ((max-size k)
+;;          (updated-pq (add-to-pq-helper hist imageRel)))
+;;     (if (> (length updated-pq) max-size)
+;;         (let loop ((i 0) (result '()) (remaining updated-pq))
+;;           (if (or (= i max-size) (null? remaining))
+;;               (reverse result)
+;;               (loop (+ i 1) (cons (car remaining) result) (cdr remaining))))
+;;         updated-pq)))
+
+(define (addToPQ hist imageRel k)
+  (define (insert-at index element lst)
+    (if (= index 0)
+        (cons element lst)
+        (cons (car lst) (insert-at (- index 1) element (cdr lst)))))
+
   (define (add-to-pq-helper pq element)
     (if (null? pq)
         (list element)
-        (if (<= (car pq) element)  ; Corrected the comparison here
+        (if (<= (car pq) element)
             (cons element pq)
             (cons (car pq) (add-to-pq-helper (cdr pq) element)))))
+
+  (define (truncate-pq pq size)
+    (if (or (null? pq) (= size 0))
+        '()
+        (cons (car pq) (truncate-pq (cdr pq) (- size 1)))))
 
   (let* ((max-size k)
          (updated-pq (add-to-pq-helper hist imageRel)))
     (if (> (length updated-pq) max-size)
-        (let loop ((i 0) (result '()) (remaining updated-pq))
-          (if (or (= i max-size) (null? remaining))
-              (reverse result)
-              (loop (+ i 1) (cons (car remaining) result) (cdr remaining))))
+        (truncate-pq updated-pq max-size)
         updated-pq)))
+
 
 (define lst1 '(82 40 32))
 (define lst2 '(19 9 7 4 3))
@@ -130,7 +155,7 @@
 (newline)
 (display (addToPQ lst2 25 5))
 (newline)
-(display (addToPQ lst3 52))
+(display (addToPQ lst3 52 (length lst3)))
 
 
 
