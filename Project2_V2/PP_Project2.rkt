@@ -144,28 +144,10 @@
                5)
       )
   )
-      
-    
 
+(define (similaritySearch queryHistogramFilename imageDatasetDirectory)
+  (
 
-
-
-  
-;; (define lst1 '(82 40 32))
-;; (define lst2 '(19 9 7 4 3))
-;; (define lst3 '(19 9 7 6 5 3 1))
-
-
-
-;; (display (addToPQ lst1 11 5))
-;; (newline)
-;; (display (addToPQ lst2 25 5))
-;; (newline)
-;; (display (addToPQ lst3 52 (length lst3)))
-
-
-
-;; (addToPQ lst1 5)
 (define h1 (colorHistogram2 "imageDataset2_15_20/25.jpg.txt"))
 (define h2 (colorHistogram2 "queryImages/q00.jpg.txt"))
 (define h3 (normalizeH h1 (getNumPixels h1)))
