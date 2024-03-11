@@ -153,23 +153,9 @@
       )
   )
 
-;; (define lst1 '((82 "i1")(40 "i2")(32 "i6")(14 "i20")(6 "i99")))
-;; 
-;; (display (addToPQ lst1 11 "i15" 5))
-
 (define (similaritySearch queryHistogramFilename imageDatasetDirectory)
   (main-rec-fn queryHistogramFilename '() 25))
 
-;(define h1 (colorHistogram2 "imageDataset2_15_20/25.jpg.txt"))
-;(define h2 (colorHistogram2 "queryImages/q00.jpg.txt"))
-;(define h3 (normalizeH h1 (getNumPixels h1)))
-;(define h4 (normalizeH h2 (getNumPixels h2)))
-
-
-;; (define (main-rec-fn qFile lst n)
-;;   (if (file-exists? (build-path (string-append "imageDataset2_15_20/" (number->string n) ".jpg.txt" )))
-;;       (cons (main-fn qFile lst n) (main-rec-fn qFile '() (+ n 1)))
-;;       '()))
 (define (main-rec-fn qFile returnLst n)
   (if (<= n 5000)
       (if (file-exists? (build-path (string-append "imageDataset2_15_20/" (number->string n) ".jpg.txt")))
