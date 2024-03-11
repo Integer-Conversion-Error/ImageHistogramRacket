@@ -101,7 +101,7 @@
       '() ; Return an empty list if the input list is empty or k is zero
       (cons (car lst) (take (cdr lst) (- k 1)))))
 
-(define (addToPQ hist imageRel k)
+(define (addToPQ hist imageRel imageName k)
   (define (insert-at index element lst)
     (if (= index 0)
         (cons element lst)
@@ -110,7 +110,7 @@
   (define (add-to-pq-helper pq element)
     (if (null? pq)
         (list element)
-        (if (<= (car pq) element)
+        (if (<= (caar pq) (car element))
             (cons element pq)
             (cons (car pq) (add-to-pq-helper (cdr pq) element)))))
 
@@ -120,7 +120,7 @@
         (cons (car pq) (truncate-pq (cdr pq) (- size 1)))))
 
   (let* ((max-size k)
-         (updated-pq (add-to-pq-helper hist imageRel)))
+         (updated-pq (add-to-pq-helper hist (list imageRel imageName))))
     (if (> (length updated-pq) max-size)
         (truncate-pq updated-pq max-size)
         updated-pq)))
@@ -145,12 +145,16 @@
       )
   )
 
-(define (similaritySearch queryHistogramFilename imageDatasetDirectory)
-  (
+(define lst1 '((82 "i1")(40 "i2")(32 "i6")(14 "i20")(6 "i99")))
 
-(define h1 (colorHistogram2 "imageDataset2_15_20/25.jpg.txt"))
-(define h2 (colorHistogram2 "queryImages/q00.jpg.txt"))
-(define h3 (normalizeH h1 (getNumPixels h1)))
-(define h4 (normalizeH h2 (getNumPixels h2)))
+(display (addToPQ lst1 11 "i15" 5))
 
-(main-fn "imageDataset2_15_20/25.jpg.txt" "queryImages/q00.jpg.txt" '())
+;(define (similaritySearch queryHistogramFilename imageDatasetDirectory)
+;  (
+
+;(define h1 (colorHistogram2 "imageDataset2_15_20/25.jpg.txt"))
+;(define h2 (colorHistogram2 "queryImages/q00.jpg.txt"))
+;(define h3 (normalizeH h1 (getNumPixels h1)))
+;(define h4 (normalizeH h2 (getNumPixels h2)))
+
+;(main-fn "imageDataset2_15_20/25.jpg.txt" "queryImages/q00.jpg.txt" '())
