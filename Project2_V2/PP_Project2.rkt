@@ -101,6 +101,9 @@
       '() ; Return an empty list if the input list is empty or k is zero
       (cons (car lst) (take (cdr lst) (- k 1)))))
 
+
+
+
 (define (addToPQ hist imageRel k)
   (define (insert-at index element lst)
     (if (= index 0)
@@ -125,8 +128,15 @@
         (truncate-pq updated-pq max-size)
         updated-pq)))
 
+
+
+
 (define (file-exists-in-directory? directory file-name)
   (file-exists? (build-path directory file-name)))
+
+
+
+
 
 (define (main-fn qFile checkedFile returnLst)
   (if (not (file-exists? (build-path checkedFile)))
@@ -145,8 +155,7 @@
       )
   )
 
-(define (similaritySearch queryHistogramFilename imageDatasetDirectory)
-  (
+
 
 (define h1 (colorHistogram2 "imageDataset2_15_20/25.jpg.txt"))
 (define h2 (colorHistogram2 "queryImages/q00.jpg.txt"))
