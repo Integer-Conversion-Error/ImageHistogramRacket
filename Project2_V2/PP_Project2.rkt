@@ -186,6 +186,6 @@
           (main-rec-fn qFile returnLst (+ n 1)))
       returnLst))
 
-(similaritySearch "queryImages/q00.jpg.txt" "imageDataset2_15_20/")
+(similaritySearch "queryImages/q05.jpg.txt" "imageDataset2_15_20/")
 
 
